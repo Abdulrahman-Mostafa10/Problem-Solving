@@ -1,0 +1,109 @@
+#include <bits/stdc++.h>
+#include <conio.h>
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+using namespace std;
+typedef long long ll;
+typedef long double ld;
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef vector<int> vi;
+#define fi first
+#define se second
+#define pp push_back
+#define all(x) (x).begin(), (x).end()
+#define Ones(n) __builtin_popcount(n)
+#define endl '\n'
+#define mem(arrr, xx) memset(arrr, xx, sizeof arrr)
+#define PI acos(-1)
+// #define int long long
+#define debug(x) cout << (#x) << " = " << x << endl
+#ifdef Clion
+freopen("input.txt", "r", stdin), freopen("output.txt", "w", stdout);
+#endif
+ 
+int dx[] = {+0, +0, -1, +1, +1, +1, -1, -1};
+int dy[] = {-1, +1, +0, +0, +1, -1, +1, -1};
+ 
+void Bedo()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+}
+ 
+void solve()
+{
+    string s;
+    cin >> s;
+    int n = s.size();
+    // for (int i = 0; i < n; i++)
+    // {
+    //     if (s[i] == '8')
+    //     {
+    //         cout << "YES\n" << s[i];
+    //         return;
+    //     }
+    // }
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = i+1; j <n ; j++)
+    //     {
+    //         if ((s[i]-'0')*10 + (s[j]-'0') == 8)
+    //         {
+    //             cout << "YES\n" << s[i] << s[j];
+    //             return;
+    //         }
+    //     }
+    // }
+    // for (int i = 0; i < n; i++)
+    // {
+    //     for (int j = i+1; j <n ; j++)
+    //     {
+    //         for (int k = j+1; k < n; k++)
+    //         {
+    //             if ((s[i]-'0')*100 + (s[j]-'0')*10 + (s[k]-'0') == 8)
+    //             {
+    //                 cout << "YES\n" << s[i] << s[j] << s[k];
+    //                 return;
+    //             }
+    //         }
+    //     }
+    // }
+    // cout << "NO";
+ 
+    for (int i = 0; i < n; ++i)
+        if (!((s[i] - '0') % 8))
+        {
+            cout << "YES" << endl
+                 << s[i];
+            return;
+        }
+    for (int i = 0; i < n; ++i)
+        for (int j = i + 1; j < n; j++)
+            if (!(((s[i] - '0') * 10 + (s[j] - '0')) % 8) && s[i] != '0')
+            {
+                cout << "YES" << endl
+                     << s[i] << s[j];
+                return;
+            }
+    for (int i = 0; i < n; ++i)
+        for (int j = i + 1; j < n; j++)
+            for (int k = j + 1; k < n; k++)
+                if (!(((s[i] - '0') * 100 + (s[j] - '0') * 10 + (s[k] - '0')) % 8) && s[i] != '0')
+                {
+                    cout << "YES" << endl
+                         << s[i] << s[j] << s[k];
+                    return;
+                }
+    cout << "NO";
+}
+ 
+signed main()
+{
+    int t = 1;
+    Bedo();
+    while (t--)
+        solve();
+}
