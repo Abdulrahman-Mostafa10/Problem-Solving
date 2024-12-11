@@ -3,35 +3,21 @@ public:
     bool closeStrings(string word1, string word2) {
         if (word1.size() != word2.size())
             return false;
-            
-        map<char, int> mp1, mp2;
+
+        vector<int> firstFrequency(26, 0), secondFrequency(26, 0);
 
         for (char ch : word1)
-            mp1[ch]++;
+            firstFrequency[ch - 'a']++;
         for (char ch : word2)
-            mp2[ch]++;
+            secondFrequency[ch - 'a']++;
 
-        for (char ch : word1)
-            if (!mp2.contains(ch))
+        for (int i = 0; i < 26; ++i)
+            if ((firstFrequency[i] > 0) != (secondFrequency[i] > 0))
                 return false;
 
-        map<int, int> firstDistincts, secondDistincts;
-        int sum1 = 0, sum2 = 0;
+        sort(firstFrequency.begin(), firstFrequency.end());
+        sort(secondFrequency.begin(), secondFrequency.end());
 
-        for (auto& [key, value] : mp1)
-            firstDistincts[value]++, sum1 += value;
-        for (auto& [key, value] : mp2)
-            secondDistincts[value]++, sum2 += value;
-
-        for (auto& [key, value] : firstDistincts)
-            if (!secondDistincts.contains(key) ||
-                secondDistincts[key] != firstDistincts[key])
-                return false;
-        for (auto& [key, value] : secondDistincts)
-            if (!firstDistincts.contains(key) ||
-                secondDistincts[key] != firstDistincts[key])
-                return false;
-
-        return true;
+        return secondFrequency == firstFrequency;
     }
 };
