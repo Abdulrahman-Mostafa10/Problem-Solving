@@ -25,5 +25,28 @@ private:
     }
 
 public:
-    int goodNodes(TreeNode* root) { return recursiveCount(root, root->val); }
+    int goodNodes(TreeNode* root) {
+        if (!root)
+            return 0;
+
+        int goodNodes = 0;
+        stack<pair<TreeNode*, int>> st;
+        st.push({root, root->val});
+
+        while (!st.empty()) {
+            auto [node, maxValue] = st.top();
+            st.pop();
+
+            if (node->val >= maxValue)
+                ++goodNodes;
+
+            maxValue = max(maxValue, node->val);
+
+            if (node->left)
+                st.push({node->left, maxValue});
+            if (node->right)
+                st.push({node->right, maxValue});
+        }
+        return goodNodes;
+    }
 };
