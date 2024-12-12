@@ -1,15 +1,15 @@
 class Solution {
 private:
     int binarySearch(vector<int>& potions, long long spell, long long success) {
-        int start = 0, end = potions.size() - 1, mid, count = 0;
+        int start = 0, end = potions.size() - 1, mid, count = potions.size();
         while (start <= end) {
             mid = start + ((end - start) >> 1);
             if (spell * potions[mid] >= success)
-                count = potions.size() - mid, end = mid - 1;
+                count = mid, end = mid - 1;
             else
                 start = mid + 1;
         }
-        return count;
+        return potions.size() - count;
     }
 
 public:
