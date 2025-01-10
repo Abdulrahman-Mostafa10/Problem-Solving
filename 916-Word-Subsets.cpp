@@ -22,7 +22,7 @@ public:
                     break;
                 }
             if (flag)
-                subsets.push_back(word);
+                subsets.emplace_back(word);
         }
         return subsets;
     }
