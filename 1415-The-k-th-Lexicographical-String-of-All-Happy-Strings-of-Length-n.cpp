@@ -1,31 +1,26 @@
 class Solution {
-private:
-    vector<string> v;
-    void rec(int n, string s = "") {
-        if (s.size() == n) {
-            v.emplace_back(s);
-            return;
-        }
-        if (s.empty()) {
-            rec(n, s + 'a'), rec(n, s + 'b'), rec(n, s + 'c');
-        } else {
-            switch (s.back()) {
-            case 'a':
-                rec(n, s + 'b'), rec(n, s + 'c');
-                break;
-            case 'b':
-                rec(n, s + 'a'), rec(n, s + 'c');
-                break;
-            case 'c':
-                rec(n, s + 'a'), rec(n, s + 'b');
-                break;
-            }
-        }
-    }
-
 public:
     string getHappyString(int n, int k) {
-        rec(n);
-        return k <= v.size() ? v[k - 1] : "";
+        int total = 1 << (n - 1);
+        if (k > 3 * total)
+            return "";
+
+        string res;
+        char ch = 'a' + (k - 1) / total;
+        res += ch;
+        k = (k - 1) % total + 1;
+
+        for (int i = 1; i < n; i++) {
+            total /= 2;
+            if (k <= total) {
+                res += (ch == 'a' ? 'b' : 'a');
+            } else {
+                res += (ch == 'c' ? 'b' : 'c');
+                k -= total;
+            }
+            ch = res.back();
+        }
+
+        return res;
     }
 };
